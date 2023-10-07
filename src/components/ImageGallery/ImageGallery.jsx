@@ -2,17 +2,13 @@ import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem'
 
-export const ImageGallery = ({ images, onClick }) => {
+export const ImageGallery = ({ images }) => {
     return (
         <ul className={css.ImageGallery}>
-            {images.map(item => (
+            {images.map(image => (
                 <ImageGalleryItem 
-                    key={item.id} 
-                    id={item.id}
-                    webformatURL={item.webformatURL} 
-                    largeImageURL={item.largeImageURL} 
-                    altText={item.tags}
-                    onClick={onClick}
+                    key={image.id} 
+                    image={image}
                 />
             ))}
         </ul>
@@ -20,6 +16,5 @@ export const ImageGallery = ({ images, onClick }) => {
 }
 
 ImageGalleryItem.propTypes = {
-    searchValue: PropTypes.string,
     images: PropTypes.array,
 };

@@ -1,23 +1,33 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { Modal } from './Modal/Modal';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = ({ webformatURL, largeImageURL, altText, onClick  }) => {
+export const ImageGalleryItem = ({ image  }) => {
+    const [showModal, setShowModal] = useState(false);
+    
+    //Функція-toggle модального вікна
+    const toggleModal = () => {
+        setShowModal(prevState => !prevState);
+    };
+
     return (
         <li className={css.ImageGalleryItem}>
             <img 
                 className={css.ImageGalleryItem_image}
-                src={webformatURL} 
-                alt={altText} 
-                onClick={() => onClick(largeImageURL, altText)}
+                src={image.webformatURL} 
+                alt={image.tags} 
+                onClick={() => toggleModal()}
             />
+            {showModal && (
+                <Modal onClose={toggleModal}>
+                    <img src={image.largeImageURL} alt={image.tags} />
+                </Modal>
+            )}
         </li>
     )
 }
 
 ImageGalleryItem.propTypes = {
-    id: PropTypes.number.isRequired,
-    webformatURL: PropTypes.string.isRequired,
-    largeImageURL: PropTypes.string.isRequired,
-    altText: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
+    image: PropTypes.array.isRequired,
 };
