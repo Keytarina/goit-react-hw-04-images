@@ -9,15 +9,15 @@ export const Modal = ({ children, onClose}) => {
      //Після монтування компонента - додаємо слухача події keydown. При розмонтуванні - видаляємо цей слухач.    
     useEffect(() => {
         //Функція закриття модального вікна по Escape
-        const handleKeyDown = event => {
+        const handleKeyEsc = event => {
             if(event.code === 'Escape') {
                 onClose();
             }
         };
-        window.addEventListener('keydown', this.handleKeyEsc);
+        window.addEventListener('keydown', handleKeyEsc);
         //Видаляємо слухач на подію 'keydown' при розмонтуванні компонента модального вікна
         return () => {
-            window.removeEventListener('keydown', this.handleKeyEsc);
+            window.removeEventListener('keydown', handleKeyEsc);
         }
     }, [onClose]);
     //Метод закриття модального по кліку на backdrop

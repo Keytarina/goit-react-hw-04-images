@@ -6,6 +6,7 @@ import { Loader } from 'components/Loader/Loader';
 import imagesAPI from 'api/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { ColorRing } from  'react-loader-spinner'
+
 import 'react-toastify/dist/ReactToastify.css';
 import css from 'components/App.module.css';
 
@@ -24,7 +25,7 @@ export const App = () => {
       setIsLoading(true);
       try {
         const response = await imagesAPI.getImages(searchValue, page);
-        setImages(prevState => ([...prevState.images, ...response.hits]));
+        setImages(prevState => [...prevState, ...response.hits]);
         if (!response.totalHits) {
           return toast.error(
             'Sorry, there are no images matching your search query. Please try again'
@@ -40,7 +41,8 @@ export const App = () => {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
+    fetchData();
   }, [ searchValue, page ]);
 
   const formSubmitHandle = searchValue => {
@@ -59,7 +61,7 @@ export const App = () => {
       <ToastContainer />
       <Searchbar onSubmit={formSubmitHandle}/>
       <ImageGallery images={images}/>
-      {images.length > 0 && !isEndCollection && <Button onClick={()=>{handleLoadMore()}}/>}
+      {images.length > 0 && !isEndCollection && <Button onClick={()=>handleLoadMore()}/>}
       {isLoading && 
       <Loader>
         <ColorRing
