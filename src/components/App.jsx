@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import imagesAPI from 'api/api';
 import { ToastContainer, toast } from 'react-toastify';
-import { ColorRing } from  'react-loader-spinner'
+import { ColorRing } from 'react-loader-spinner';
 
 import 'react-toastify/dist/ReactToastify.css';
 import css from 'components/App.module.css';
@@ -18,7 +18,7 @@ export const App = () => {
   const [isEndCollection, setIsEndCollection] = useState(false);
 
   useEffect(() => {
-    if(searchValue === '') {
+    if (searchValue === '') {
       return;
     }
     const fetchData = async () => {
@@ -43,7 +43,7 @@ export const App = () => {
       }
     };
     fetchData();
-  }, [ searchValue, page ]);
+  }, [searchValue, page]);
 
   const formSubmitHandle = searchValue => {
     setSearchValue(searchValue);
@@ -53,27 +53,30 @@ export const App = () => {
   };
 
   const handleLoadMore = () => {
-    setPage(prevState => prevState + 1 );
-  }
+    setPage(prevState => prevState + 1);
+  };
 
   return (
     <div className={css.App}>
       <ToastContainer />
-      <Searchbar onSubmit={formSubmitHandle}/>
-      <ImageGallery images={images}/>
-      {images.length > 0 && !isEndCollection && <Button onClick={()=>handleLoadMore()}/>}
-      {isLoading && 
-      <Loader>
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#b8c480', '#B2A3B5', '#F4442E', '#51E5FF', '#429EA6']}
-        />
-      </Loader>}
+      <Searchbar onSubmit={formSubmitHandle} />
+      <ImageGallery images={images} />
+      {images.length > 0 && !isEndCollection && (
+        <Button onClick={handleLoadMore} />
+      )}
+      {isLoading && (
+        <Loader>
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#b8c480', '#B2A3B5', '#F4442E', '#51E5FF', '#429EA6']}
+          />
+        </Loader>
+      )}
     </div>
   );
 };
